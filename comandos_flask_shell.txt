@@ -1,0 +1,35 @@
+(env-todo) C:\Users\Alan\Documents\Python\todo_list>flask --app todor shell
+Python 3.11.4 (tags/v3.11.4:d2340ef, Jun  7 2023, 05:45:37) [MSC v.1934 64 bit (AMD64)] on win32
+App: todor
+Instance: C:\Users\Alan\Documents\Python\todo_list\instance
+>>> from todor.models import User, Todo
+>>> from todor import db
+>>> user = User('ALanEduardo', 'banderin1')
+>>> users = User.query.all()
+>>> users
+[]
+>>> db.session.add(user)
+>>> users
+[]
+>>> db.session.commit()
+>>> users = User.query.all()
+>>> users
+[<User: ALanEduardo >]
+>>> todo1 = Todo(1, 'Curso de Flask', 'desc')
+>>> todo2 = Todo(1, 'Curso de Git', 'desc')
+>>> db.session.add(todo1)
+>>> db.session.commit()
+>>> db.session.add(todo1)
+>>> db.session.commit()
+>>> todos = Todo.query.all()
+>>> todos
+[<Todo: Curso de Flask >]
+>>> db.session.add(todo2)
+>>> db.session.commit()
+>>> todos = Todo.query.all()
+>>> todos
+[<Todo: Curso de Flask >, <Todo: Curso de Git >]
+>>> todo = Todo.query.get(2)
+>>> todo
+<Todo: Curso de Git >
+>>> exit()
