@@ -32,6 +32,7 @@ def register():
         # * OBTENEMOS LOS DATOS COLOCADOS DEL FORMULARIO
         username = request.form['username']
         password = request.form['password']
+        confirm_password = request.form['confirm_password']
 
         user = User(username, generate_password_hash(password))
 
@@ -42,11 +43,15 @@ def register():
         user_name = User.query.filter_by(username=username).first()
 
         if user_name == None:
-            # * SI NO EXISTE EL USUARIO LO AGREGAMOS A LA BASE DE DATOS
-            db.session.add(user)
-            # * COMMIT PARA QUE SE HAGAN LOS CAMBIOS A LA BASE DE DATOS
-            db.session.commit()
-            return redirect(url_for('auth.login'))
+            # * VALIDAMOS QUE CONTRASEÑA SEA IGUAL QUE CONFIRMAR CONTRASEÑA
+            if password != confirm_password:
+                massage_error = "Las contraseñas no son similares. Confirma nuevamente."
+            else:
+                # * SI NO EXISTE EL USUARIO LO AGREGAMOS A LA BASE DE DATOS
+                db.session.add(user)
+                # * COMMIT PARA QUE SE HAGAN LOS CAMBIOS A LA BASE DE DATOS
+                db.session.commit()
+                return redirect(url_for('auth.login'))
         else:
             massage_error = f'El usuario "{username}" se encuentra registrado. Intenta nuevamente.'
             # * MANDMOS EL MENSAJE DE ERROR CON FLASH
