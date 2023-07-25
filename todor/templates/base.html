@@ -20,12 +20,24 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
+                    {% if g.user %}
+                    <li class="nav-item">
+                        <span title="Sesión de {{ g.user.username }}" class="nav-link active">{{ g.user.username }}</span>
+                    </li>
+                    <li class="nav-item">
+                        <a title="Tareas" class="nav-link" href="{{ url_for('todo.index') }}">Tareas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a title=" Cerrar Sesión de {{ g.user.username }}" class="nav-link" href="{{ url_for('auth.logout') }}">Cerrar Sesión</a>
+                    </li>
+                    {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('auth.register') }}">Registrar</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('auth.login') }}">Iniciar Sesión</a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -35,6 +47,18 @@
     <!-- Contenido -->
     {% endblock %}
 
+    <!-- MENSJAES DE ERROR -->
+    {% for massage in get_flashed_messages() %}
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="alert alert-warning" role="alert">
+                    {{ massage }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"

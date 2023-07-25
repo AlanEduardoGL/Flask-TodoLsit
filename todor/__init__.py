@@ -11,7 +11,7 @@ def create_app():
     # ! CONFIGURACIÓN DEL PROYECTO. !
     app.config.from_mapping(
         DEBUG=True,  # * DEBUG A TRUE
-        SECRETE_KEY='dev',  # * LLAVE SECRETA PARA LOS FORMULARIOS
+        SECRET_KEY='dev',  # * LLAVE SECRETA PARA LOS FORMULARIOS
         SQLALCHEMY_DATABASE_URI="sqlite:///todolist.db" # * AGREGAMOS EL NOMBRE A LA BASE DE DATOS
     )
 
