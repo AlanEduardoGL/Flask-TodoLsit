@@ -2,6 +2,8 @@ from flask import Flask
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
 
+
+# * CREAMOS OBJETO E INSTANCIA DE LA CLASE SQLAlchemy
 db = SQLAlchemy()
 
 def create_app():
@@ -18,10 +20,11 @@ def create_app():
     # * INICIALIZAMOS SQLALCHEMY
     db.init_app(app)
 
-    # ! REGISTRAMOS BLUEPRINT !
+    # ! REGISTRAMOS BLUEPRINT todo !
     from todor import todo
     app.register_blueprint(todo.bp)
 
+    # ! REGISTRAMOS BLUEPRINT auth !
     from todor import auth
     app.register_blueprint(auth.bp)
 
