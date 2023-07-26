@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<div class="container-sm text-center">
+
+    {% if g.user %}
+    <br>
+    <h1 class="display-3">Bienvenido a tu lista de tareas, {{ g.user.username }}.</h1>
+    {% else %}
+    <br>
+    <h1 class="display-3">¡Bienvenido!</h1>
+    <h3 class="display-3">Inicia sesión o puedes crear una cuenta.</h3>
+    {% endif %}
+
+    <p class="lead">Aquí puedes llevar un control o registro de todas tus tareas y tener una vista general de tus
+        responsabilidades.</p>
+
+    <hr class="my-4">
+
+    <div class="d-felx justify-content-center">
+        <a href="{{ url_for('auth.login') }}" class="btn btn-primary mx-2">Iniciar Sesión</a>
+        <a href="{{ url_for('auth.register') }}" class="btn btn-success mx-2">Registrarme</a>
+    </div>
+
+</div>
+{% endblock %}
