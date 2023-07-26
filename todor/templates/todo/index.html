@@ -1,5 +1,45 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{% block title %}Lista de tareas{% endblock %}</h1>
+<section class="container-fluid">
+    <nav class="navbar">
+        <h1>{% block title %}Lista de tareas{% endblock %}</h1>
+        <a href="#" class="btn btn-success">Nueva tarea</a>
+    </nav>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="col">Tarea</th>
+                <th class="col">Estado</th>
+                <th class="col" colspan="2">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {# VALIDAMOS QUE SE MUESTREN SOLO TAREAS DEL USUARIO CON SESION INICIADA #}
+            {% if g.user.id != todos.created_by %}
+            <h5>Actualmente no cuentas con tareas registradas. <a href="#">Nueva Tarea.</a></h5>
+            {% else %}
+            {% for todo in todos | reverse %} {# FILTRO reverse PARA INICIAR CON EL MAS RECIENTE #}
+            <tr>
+                <td>
+                    <h5>{{ todo.title }}</h5>
+                    <p>{{ todo.desc }}</p>
+                </td>
+                {% if todo.state != 1 %}
+                <td>Incompleto</td>
+                {% else %}
+                <td>Completado</td>
+                {% endif %}
+                <td>
+                    <a href="" class="btn btn-warning btn-sm">Editar</a>
+                </td>
+                <td>
+                    <a href="" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+</section>
 {% endblock %}

@@ -110,7 +110,24 @@ def load_logged_in_user():
         g.user = None
 
 
+# * FUNCION PARA CERRAR LA SESION
 @bp.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('index'))
+
+
+import functools # * SIRVE PARA REQUERIR LA SESION
+
+
+# * DEFINIMOS VISTAS QUE VAN A REQUERIR SESION ACTIVA EN CIERTAS PANTALLAS
+def login_required(view):
+    @functools.wraps(view) # * ANIDAMOS UNA FUNCION A ESTE DECORADOR
+    def wrapped_view(**kwargs):# * RECIBE PARAMETROS INDEFINIDOS COMO EL NOMBRE
+        # * PRIMERO VERIFICAMOS QUE UN USUARIO HAYA INICIADO SESION        
+        if g.user != None:
+            return view(**kwargs)
+        else:
+           return redirect(url_for('auth.login')) 
+    
+    return wrapped_view
