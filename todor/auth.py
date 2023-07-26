@@ -9,7 +9,7 @@ from flask import (
     redirect,  # * REDIRECCIONA A OTRA PAGINA
     flash,  # * ENVIA UNA SERIE DE MENSAJES DE ERROR A LAS PLANTILLAS HTML
     session,  # * PARA GUARDAR Y SABER SI UN USUARIO HA INICIADO SESION O NO
-    g  # * OBJETO PARA ALMACENAR COKIES
+    g  # * OBJETO PARA ALMACENAR COKIES Y SESIONES
 )
 
 from werkzeug.security import (

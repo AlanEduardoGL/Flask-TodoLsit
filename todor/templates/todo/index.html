@@ -3,8 +3,8 @@
 {% block content %}
 <section class="container-fluid">
     <nav class="navbar">
-        <h1>{% block title %}Lista de tareas{% endblock %}</h1>
-        <a href="#" class="btn btn-success">Nueva tarea</a>
+        <h1>{% block title %}Lista de Tareas: {% endblock %}</h1>
+        <a href="{{ url_for('todo.create') }}" class="btn btn-success">Nueva tarea</a>
     </nav>
     <table class="table">
         <thead>
@@ -15,30 +15,44 @@
             </tr>
         </thead>
         <tbody>
-            {# VALIDAMOS QUE SE MUESTREN SOLO TAREAS DEL USUARIO CON SESION INICIADA #}
-            {% if g.user.id != todos.created_by %}
-            <h5>Actualmente no cuentas con tareas registradas. <a href="#">Nueva Tarea.</a></h5>
-            {% else %}
             {% for todo in todos | reverse %} {# FILTRO reverse PARA INICIAR CON EL MAS RECIENTE #}
+            {# MOSTRAREMOS TAREAS DEL USUARIO CON SESION INICIADA #}
+            {% if g.user.id == todo.created_by %}
             <tr>
                 <td>
                     <h5>{{ todo.title }}</h5>
                     <p>{{ todo.desc }}</p>
                 </td>
                 {% if todo.state != 1 %}
-                <td>Incompleto</td>
+                <td><svg xmlns="http://www.w3.org/2000/svg"
+                    class="icon icon-tabler icon-tabler-alert-hexagon" width="28" height="28" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="#ff4500" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path
+                        d="M19.875 6.27c.7 .398 1.13 1.143 1.125 1.948v7.284c0 .809 -.443 1.555 -1.158 1.948l-6.75 4.27a2.269 2.269 0 0 1 -2.184 0l-6.75 -4.27a2.225 2.225 0 0 1 -1.158 -1.948v-7.285c0 -.809 .443 -1.554 1.158 -1.947l6.75 -3.98a2.33 2.33 0 0 1 2.25 0l6.75 3.98h-.033z" />
+                    <path d="M12 8v4" />
+                    <path d="M12 16h.01" />
+                </svg> <span style="font-weight: bold;" class="text-warning">Pendiente</span></td>
                 {% else %}
-                <td>Completado</td>
+                <td><svg xmlns="http://www.w3.org/2000/svg"
+                    class="icon icon-tabler icon-tabler-certificate-2" width="28" height="28" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 15m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                    <path d="M10 7h4" />
+                    <path d="M10 18v4l2 -1l2 1v-4" />
+                    <path d="M10 19h-2a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-2" />
+                </svg> <span style="font-weight: bold;" class="text-success">Completado</span></td>
                 {% endif %}
                 <td>
-                    <a href="" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{{ url_for('todo.edit', id = todo.id) }}" class="btn btn-warning btn-sm">Editar</a>
                 </td>
                 <td>
-                    <a href="" class="btn btn-danger btn-sm">Eliminar</a>
+                    <a href="{{ url_for('todo.delete', id = todo.id) }}" class="btn btn-danger btn-sm">Eliminar</a>
                 </td>
             </tr>
-            {% endfor %}
             {% endif %}
+            {% endfor %}
         </tbody>
     </table>
 </section>
