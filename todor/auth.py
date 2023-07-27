@@ -87,7 +87,7 @@ def login():
                 session.clear()
                 # * RECUPERAMOS EL ID DE LA PERSONA QUE INICIO SESION
                 session['user_id'] = user.id
-                return redirect(url_for('todo.index'))
+                return redirect(url_for('index'))
 
         # * MANDAMOS MENSAJE DE ERROR EN CASO DE EXISTIR
         flash(massage_error)
