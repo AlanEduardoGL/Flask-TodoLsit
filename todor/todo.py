@@ -48,6 +48,11 @@ def create():
 def get_todo(id):
     # * CONSULTA PARA OBTENER LA TAREA A EDITAR
     todo = Todo.query.get_or_404(id)
+    # print(type(todo))
+    # print(todo.id)
+    # print(todo.created_by)
+    # print(todo.title)
+    # print(todo.desc)
     return todo
 
 
@@ -67,8 +72,8 @@ def edit(id):
 
         # * REDIRECCIONAMOS A LA LISTA DE MATERIALES
         return redirect(url_for('todo.index'))
-
-    return render_template('todo/update.html', todo=todo)
+    else:
+        return render_template('todo/update.html', todo=todo)
 
 
 @bp.route('/delete/<int:id>', methods=['GET', 'POST'])
